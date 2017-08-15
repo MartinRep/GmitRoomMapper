@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+    }
+]

@@ -1,0 +1,7 @@
+#Tue Aug 15 21:30:17 IST 2017
+base.0=/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_628c53840f6a3f72a69600f58d9078f391596442
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_d86d46d641a90eb799d7e9cdbec7ff1ba01e3299/classes.dex
+base.1=/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_d86d46d641a90eb799d7e9cdbec7ff1ba01e3299
+file.0=/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_628c53840f6a3f72a69600f58d9078f391596442/classes.dex

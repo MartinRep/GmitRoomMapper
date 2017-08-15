@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/ic_launcher_round.png",
+        "source": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/ic_launcher.png",
+        "source": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    }
+]

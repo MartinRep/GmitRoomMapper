@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_tint_default.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_color_highlight_material.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_track.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_tint_spinner.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_tint_switch_thumb.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_btn_colored_text_material.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/res/merged/debug/color-v23/abc_tint_edittext.xml",
+        "source": "/home/bigrepo/.android/build-cache/b0e8a0dd1362d10ba1088f8f67296b56c2eb13d9/output/res/color-v23/abc_tint_edittext.xml"
+    }
+]
