@@ -19,8 +19,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.example.bigrepo.roommapper.TouchImageView;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
     ArrayList<String> data = new ArrayList<String>();
+    private final String fileName = "gmitRooms.cql";
+    String[] direction = new String[2];
 
-    private EditText roomNumber;
-    private EditText corridorNumber;
+    private EditText roomNumberId;
+    private EditText corridorNumberId;
     private EditText logOutput;
     private Button submitButton;
     private RadioGroup radioGroup;
@@ -42,55 +42,67 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        roomNumber = (EditText) findViewById(R.id.editTextRoom);
-        corridorNumber = (EditText) findViewById(R.id.editTextCorridor);
+        roomNumberId = (EditText) findViewById(R.id.editTextRoom);
+        corridorNumberId = (EditText) findViewById(R.id.editTextCorridor);
         logOutput = (EditText) findViewById(R.id.editTextLog);
         submitButton = (Button) findViewById(R.id.buttonSubmit);
         radioGroup = (RadioGroup) findViewById(R.id.roomConnectionRadioId);
 
-
+        //Checks for storage permissions and ask for then if needed
+        if(!verifyStoragePermissions(MainActivity.this)){
+            //display error message for lack of storage permission
+        }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 radioButton = (RadioButton) findViewById(i);
-               switch (radioButton.getId()){
-
-
+                switch (radioButton.getId()){
                     case R.id.radioButtonUp :
-                        logOutput.setText("Up");
-                        data.add("Up");
+                        direction[0] = "up";
+                        direction[1] = "down";
                         break;
                     case R.id.radioButtonDown :
-                        logOutput.setText("Down");
-                        data.add("Down");
+                        direction[0] = "down";
+                        direction[1] = "up";
                         break;
                     case R.id.radioButtonLeft:
-                        logOutput.setText("Left");
-                        data.add("Left");
+                        direction[0] = "left";
+                        direction[1] = "right";
                         break;
                     case R.id.radioButtonRight:
-                        logOutput.setText("Right");
-                        data.add("Right");
+                        direction[0] = "right";
+                        direction[1] = "left";
                         break;
                 }
             }
         });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
+            String roomNumber, corridorNumber;
+
             @Override
             public void onClick(View view) {
-                verifyStoragePermissions(MainActivity.this);
-                try {
-                    saveToFile("GmitRooms.cql", data);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                roomNumber = roomNumberId.getText().toString();
+                corridorNumber = corridorNumberId.getText().toString();
+                if(!roomNumber.toString().equals("") && !corridorNumber.toString().equals("") && direction.length > 1) {
+                    StringBuilder unitToSave = new StringBuilder();
+                    unitToSave.append("CREATE ("+roomNumber+")-[:Access{connection:['"+direction[0]+"']}]->("+corridorNumber+")\n");
+                    unitToSave.append("CREATE ("+corridorNumber+")-[:Access{connection:['"+direction[1]+"']}]->("+roomNumber+")\n");
+                    data.add(unitToSave.toString());
+//                    CREATE (r208)-[:Access{connection:['right']}]->(c19)
+//                            CREATE (c19)-[:Access{connection:['left']}]->(r207)
+                    try {
+                        saveToFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
     }
 
-    private void saveToFile(String fileName, ArrayList<String> data) throws IOException {
+    private void saveToFile() throws IOException {
         StringBuilder dataToSave = new StringBuilder();
         for (String s : data) {
             dataToSave.append(s);
@@ -104,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         outFile.close();
     }
 
-    public static void verifyStoragePermissions(Activity activity) {
+    public static boolean verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
@@ -116,5 +128,7 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_EXTERNAL_STORAGE
             );
         }
+        if (permission != PackageManager.PERMISSION_GRANTED) return false;
+        else return true;
     }
 }
