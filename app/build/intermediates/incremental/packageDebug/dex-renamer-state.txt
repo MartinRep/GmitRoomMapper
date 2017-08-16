@@ -1,4 +1,4 @@
-#Tue Aug 15 21:30:17 IST 2017
+#Wed Aug 16 17:45:31 IST 2017
 base.0=/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_628c53840f6a3f72a69600f58d9078f391596442
 renamed.1=classes.dex
 renamed.0=classes2.dex
