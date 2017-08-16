@@ -4,15 +4,21 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.annotation.IdRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import com.example.bigrepo.roommapper.TouchImageView;
 
 
@@ -22,11 +28,14 @@ public class MainActivity extends AppCompatActivity {
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    String[] data;
+    ArrayList<String> data = new ArrayList<String>();
 
     private EditText roomNumber;
     private EditText corridorNumber;
+    private EditText logOutput;
     private Button submitButton;
+    private RadioGroup radioGroup;
+    private RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +44,63 @@ public class MainActivity extends AppCompatActivity {
 
         roomNumber = (EditText) findViewById(R.id.editTextRoom);
         corridorNumber = (EditText) findViewById(R.id.editTextCorridor);
+        logOutput = (EditText) findViewById(R.id.editTextLog);
         submitButton = (Button) findViewById(R.id.buttonSubmit);
+        radioGroup = (RadioGroup) findViewById(R.id.roomConnectionRadioId);
 
-        verifyStoragePermissions(MainActivity.this);
-        try {
-            saveToFile(getPublicFile("GmitRooms.cql"), data.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
+
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                radioButton = (RadioButton) findViewById(i);
+               switch (radioButton.getId()){
+
+
+                    case R.id.radioButtonUp :
+                        logOutput.setText("Up");
+                        data.add("Up");
+                        break;
+                    case R.id.radioButtonDown :
+                        logOutput.setText("Down");
+                        data.add("Down");
+                        break;
+                    case R.id.radioButtonLeft:
+                        logOutput.setText("Left");
+                        data.add("Left");
+                        break;
+                    case R.id.radioButtonRight:
+                        logOutput.setText("Right");
+                        data.add("Right");
+                        break;
+                }
+            }
+        });
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                verifyStoragePermissions(MainActivity.this);
+                try {
+                    saveToFile("GmitRooms.cql", data);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void saveToFile(String fileName, ArrayList<String> data) throws IOException {
+        StringBuilder dataToSave = new StringBuilder();
+        for (String s : data) {
+            dataToSave.append(s);
+            dataToSave.append("\n");
         }
-    }
-
-    private File getPublicFile(String fileName){
-        // Get the directory for the user's public pictures directory.
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
-        return file;
-    }
-
-    private void saveToFile(File file, String data) throws IOException {
-        if (!file.exists()) file.createNewFile();
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS), fileName);
         FileOutputStream outFile = new FileOutputStream(file);
-        outFile.write(data.getBytes());
+        //FileOutputStream outFile = openFileOutput(fileName, MODE_APPEND);
+        outFile.write(dataToSave.toString().getBytes());
         outFile.close();
     }
 
