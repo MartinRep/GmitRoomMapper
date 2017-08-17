@@ -133,4 +133,20 @@
         tools:layout_editor_absoluteY="849dp"
         tools:layout_editor_absoluteX="455dp" />
 
+    <Button
+        android:id="@+id/undoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Undo"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSubmit"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintLeft_toRightOf="@+id/roomConnectionRadioId"
+        app:layout_constraintRight_toLeftOf="@+id/editTextLog"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.924" />
+
 </android.support.constraint.ConstraintLayout>

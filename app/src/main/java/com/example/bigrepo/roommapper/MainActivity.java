@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> data = new ArrayList<String>();
     private final String fileName = "gmitRooms.cql";
     String[] direction = new String[2];
+    String roomNumber;
 
     private EditText roomNumberId;
     private EditText corridorNumberId;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Button submitButton;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
+    private Button undoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         logOutput = (EditText) findViewById(R.id.editTextLog);
         submitButton = (Button) findViewById(R.id.buttonSubmit);
         radioGroup = (RadioGroup) findViewById(R.id.roomConnectionRadioId);
+        undoButton = (Button) findViewById(R.id.undoButton);
 
         logOutput.setBackgroundColor(Color.BLACK);
         logOutput.setTextColor(Color.GREEN);
@@ -91,33 +94,50 @@ public class MainActivity extends AppCompatActivity {
         });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
-            String roomNumber, corridorNumber;
 
             @Override
             public void onClick(View view) {
+                String corridorNumber;
                 roomNumber = roomNumberId.getText().toString();
                 corridorNumber = corridorNumberId.getText().toString();
-                if(!roomNumber.toString().equals("") && !corridorNumber.toString().equals("") && direction.length > 1) {
+                if(!roomNumber.toString().equals("") && !corridorNumber.toString().equals("") && direction[0] != null) {
                     StringBuilder unitToSave = new StringBuilder();
                     logOutput.append("Room "+roomNumber+" added.\n");
                     unitToSave.append("CREATE ("+roomNumber+")-[:Access{connection:['"+direction[0]+"']}]->("+corridorNumber+")\n");
                     unitToSave.append("CREATE ("+corridorNumber+")-[:Access{connection:['"+direction[1]+"']}]->("+roomNumber+")\n");
                     data.add(unitToSave.toString());
-//                    CREATE (r208)-[:Access{connection:['right']}]->(c19)
-//                            CREATE (c19)-[:Access{connection:['left']}]->(r207)
                     try {
                         saveToFile();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     roomNumberId.setText("");
+                    roomNumberId.requestFocus();
+                } else {
+                    logOutput.append("Set all parameters!\n");
                 }
+            }
+        });
+
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                data.remove(data.size()-1);
+                data = new ArrayList<String>(data.subList(0,data.size()-1));
+                logOutput.append("Room "+roomNumber.toString()+" removed\n");
+                try {
+                    saveToFile();
+                } catch (IOException e) {
+                    logOutput.append(e.toString());
+                }
+
             }
         });
     }
 
     private void readFromFile() throws IOException{
         String line;
+        String lastRoom = "";
         int dataRead = 0;
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
         FileInputStream inFile = new FileInputStream(file);
@@ -126,8 +146,11 @@ public class MainActivity extends AppCompatActivity {
         while ((line = inData.readLine()) != null) {
             data.add(line+"\n");
             dataRead++;
+            lastRoom = line.substring(44,line.length()-1);
         }
-        logOutput.append("Data read from file: "+dataRead);
+        logOutput.append("Data read from file: "+dataRead+"\n");
+        inStream.close();
+        logOutput.append("Last room added: "+lastRoom+"\n");
     }
 
     private void saveToFile() throws IOException {
@@ -136,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
             dataToSave.append(s);
             //dataToSave.append("\n");
         }
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS), fileName);
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
         FileOutputStream outFile = new FileOutputStream(file);
         //FileOutputStream outFile = openFileOutput(fileName, MODE_APPEND);
         outFile.write(dataToSave.toString().getBytes());
@@ -147,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean verifyStoragePermissions(Activity activity) {
         // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
         if (permission != PackageManager.PERMISSION_GRANTED) {
             // We don't have permission so prompt the user
             ActivityCompat.requestPermissions(

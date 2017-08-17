@@ -5,22 +5,29 @@
     build-mode="COLD"
     format="10"
     plugin-version="2.3.3"
-    timestamp="1502976753556"
+    timestamp="1502986042416"
     token="6170927723317795228"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="0" />
+        duration="95" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="4" />
     <task
         name="verifier"
-        duration="0" />
+        duration="8" />
+
+    <artifact
+        location="/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
+        type="SPLIT" />
+    <artifact
+        location="/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/outputs/apk/app-debug.apk"
+        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
@@ -65,7 +72,23 @@
     </build>
     <build
         build-mode="COLD"
-        timestamp="1502974897916"
+        timestamp="1502983804864"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1502985927499"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/outputs/apk/app-debug.apk"
+            type="SPLIT_MAIN" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1502986042416"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
@@ -74,9 +97,5 @@
             location="/home/bigrepo/AndroidStudioProjects/RoomMapper/app/build/outputs/apk/app-debug.apk"
             type="SPLIT_MAIN" />
     </build>
-    <build
-        build-mode="COLD"
-        timestamp="1502976753556"
-        verifier="COLD_SWAP_REQUESTED" />
 
 </instant-run>
