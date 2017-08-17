@@ -39,9 +39,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText corridorNumberId;
     private EditText logOutput;
     private Button submitButton;
-    private RadioGroup radioGroup;
-    private RadioButton radioButton;
+    private RadioGroup directionRadioGroup;
+    private RadioButton directionRadioButton;
     private Button undoButton;
+    private RadioGroup pictureRadioGroup;
+    private RadioButton  pictureRadioButton;
+    private TouchImageView touchImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +55,10 @@ public class MainActivity extends AppCompatActivity {
         corridorNumberId = (EditText) findViewById(R.id.editTextCorridor);
         logOutput = (EditText) findViewById(R.id.editTextLog);
         submitButton = (Button) findViewById(R.id.buttonSubmit);
-        radioGroup = (RadioGroup) findViewById(R.id.roomConnectionRadioId);
+        directionRadioGroup = (RadioGroup) findViewById(R.id.roomConnectionRadioId);
         undoButton = (Button) findViewById(R.id.undoButton);
+        pictureRadioGroup = (RadioGroup) findViewById(R.id.PictureRadioGroupId);
+        touchImageView = (TouchImageView) findViewById(R.id.imageView);
 
         logOutput.setBackgroundColor(Color.BLACK);
         logOutput.setTextColor(Color.GREEN);
@@ -68,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        directionRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
-                radioButton = (RadioButton) findViewById(i);
-                switch (radioButton.getId()){
+                directionRadioButton = (RadioButton) findViewById(i);
+                switch (directionRadioButton.getId()){
                     case R.id.radioButtonUp :
                         direction[0] = "up";
                         direction[1] = "down";
@@ -88,6 +93,33 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.radioButtonRight:
                         direction[0] = "right";
                         direction[1] = "left";
+                        break;
+                }
+            }
+        });
+
+        pictureRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                pictureRadioButton = (RadioButton) findViewById(i);
+                switch (pictureRadioButton.getId()){
+                    case R.id.radioButtonGmap0Id :
+                        touchImageView.setImageDrawable(getDrawable(R.drawable.gmit0));
+                        break;
+                    case R.id.radioButtonGmap1Id :
+                        touchImageView.setImageDrawable(getDrawable(R.drawable.gmit1));
+                        break;
+                    case R.id.radioButtonDgmapId :
+                        touchImageView.setImageDrawable(getDrawable(R.drawable.dmaps1));
+                        break;
+                    case R.id.radioButtonDmap0Id :
+                        touchImageView.setImageDrawable(getDrawable(R.drawable.dmap0));
+                        break;
+                    case R.id.radioButtonDmap1Id :
+                        touchImageView.setImageDrawable(getDrawable(R.drawable.dmaps1));
+                        break;
+                    case R.id.radioButtonDmap2Id :
+                        touchImageView.setImageDrawable(getDrawable(R.drawable.dmap2));
                         break;
                 }
             }
@@ -148,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
             dataRead++;
             lastRoom = line.substring(44,line.length()-1);
         }
-        logOutput.append("Data read from file: "+dataRead+"\n");
+        logOutput.append(dataRead+" records added.\n");
         inStream.close();
         logOutput.append("Last room added: "+lastRoom+"\n");
     }
