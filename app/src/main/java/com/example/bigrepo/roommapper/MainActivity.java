@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         undoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                data.remove(data.size()-1);
                 data = new ArrayList<String>(data.subList(0,data.size()-1));
                 logOutput.append("Room "+roomNumber.toString()+" removed\n");
                 try {
