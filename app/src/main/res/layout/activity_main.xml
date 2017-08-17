@@ -20,6 +20,7 @@
         android:hint="@string/corridor_number"
         android:inputType="textPersonName"
         android:textAlignment="center"
+        android:background="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -40,6 +41,7 @@
         android:ems="10"
         android:hint="@string/room_number"
         android:inputType="textPersonName"
+        android:background="@color/colorAccent"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.096"
@@ -115,8 +117,8 @@
 
     <EditText
         android:id="@+id/editTextLog"
-        android:layout_width="333dp"
-        android:layout_height="429dp"
+        android:layout_width="329dp"
+        android:layout_height="278dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -127,6 +129,8 @@
         app:layout_constraintHorizontal_bias="0.953"
         app:layout_constraintLeft_toRightOf="@+id/editTextCorridor"
         app:layout_constraintRight_toRightOf="parent"
-        tools:focusableInTouchMode="false" />
+        tools:focusableInTouchMode="false"
+        tools:layout_editor_absoluteY="849dp"
+        tools:layout_editor_absoluteX="455dp" />
 
 </android.support.constraint.ConstraintLayout>
