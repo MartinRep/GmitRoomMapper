@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> data = new ArrayList<String>();
     private final String fileName = "gmitRooms.cql";
     String[] direction = new String[2];
-    String roomNumber;
+    String roomNumber, lastRoom = "";
+    ArrayList <String> rooms = new ArrayList<String>();
 
     private EditText roomNumberId;
     private EditText corridorNumberId;
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         touchImageView.setImageDrawable(getDrawable(R.drawable.dmap0));
                         break;
                     case R.id.radioButtonDmap1Id :
-                        touchImageView.setImageDrawable(getDrawable(R.drawable.dmaps1));
+                        touchImageView.setImageDrawable(getDrawable(R.drawable.dmap1));
                         break;
                     case R.id.radioButtonDmap2Id :
                         touchImageView.setImageDrawable(getDrawable(R.drawable.dmap2));
@@ -132,54 +133,69 @@ public class MainActivity extends AppCompatActivity {
                 String corridorNumber;
                 roomNumber = roomNumberId.getText().toString();
                 corridorNumber = corridorNumberId.getText().toString();
-                if(!roomNumber.toString().equals("") && !corridorNumber.toString().equals("") && direction[0] != null) {
-                    StringBuilder unitToSave = new StringBuilder();
-                    logOutput.append("Room "+roomNumber+" added.\n");
-                    unitToSave.append("CREATE ("+roomNumber+")-[:Access{connection:['"+direction[0]+"']}]->("+corridorNumber+")\n");
-                    unitToSave.append("CREATE ("+corridorNumber+")-[:Access{connection:['"+direction[1]+"']}]->("+roomNumber+")\n");
-                    data.add(unitToSave.toString());
-                    try {
-                        saveToFile();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                //Checks if room already exists
+                if (rooms.indexOf(roomNumber) == -1) {
+                    //checks if all the inputs were filled and selected
+                    if (!roomNumber.toString().equals("") && !corridorNumber.toString().equals("") && direction[0] != null) {
+                        //Now creates CQL query
+                        StringBuilder unitToSave = new StringBuilder();
+                        logOutput.append("Room " + roomNumber + " added.\n");
+                        unitToSave.append("CREATE (" + roomNumber + ")-[:Access{connection:['" + direction[0] + "']}]->(" + corridorNumber + ")\n");
+                        unitToSave.append("CREATE (" + corridorNumber + ")-[:Access{connection:['" + direction[1] + "']}]->(" + roomNumber + ")\n");
+                        data.add(unitToSave.toString());
+                        try {
+                            saveToFile();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+                        rooms.add(roomNumber);
+                        roomNumberId.setText("");
+                        roomNumberId.requestFocus();
+                    } else {
+                        logOutput.append("Set all parameters!\n");
                     }
-                    roomNumberId.setText("");
-                    roomNumberId.requestFocus();
-                } else {
-                    logOutput.append("Set all parameters!\n");
-                }
+                } else logOutput.append("!!! Room "+roomNumber+" already exists !!!\n");
             }
         });
 
         undoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                data = new ArrayList<String>(data.subList(0,data.size()-1));
-                logOutput.append("Room "+roomNumber.toString()+" removed\n");
-                try {
-                    saveToFile();
-                } catch (IOException e) {
-                    logOutput.append(e.toString());
-                }
-
+                if(data.size() > 0) {
+                    //extract room number from last () inside cypher code
+                    lastRoom = data.get(data.size() - 1).substring(data.get(data.size() - 1).indexOf(">(") + 2, data.get(data.size() - 1).indexOf(")", data.get(data.size() - 1).indexOf(">(") + 2));
+                    //trim Added rooms list
+                    rooms.remove(rooms.size()-1);
+                    //deletes last 2 records from the list
+                    data = new ArrayList<String>(data.subList(0, data.size() - 2));
+                    logOutput.append("Room " + lastRoom + " removed\n");
+                    try {
+                        saveToFile();
+                    } catch (IOException e) {
+                        logOutput.append(e.toString());
+                    }
+                } else logOutput.append("Empty list!\n");
             }
         });
     }
 
     private void readFromFile() throws IOException{
         String line;
-        String lastRoom = "";
-        int dataRead = 0;
+        //get File handler for public directory for downloads
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
         FileInputStream inFile = new FileInputStream(file);
         InputStreamReader inStream = new InputStreamReader(inFile);
         BufferedReader inData = new BufferedReader(inStream);
+        rooms.clear();
         while ((line = inData.readLine()) != null) {
             data.add(line+"\n");
-            dataRead++;
-            lastRoom = line.substring(44,line.length()-1);
+            //Extract last room number
+            if(data.size()%2 == 0)
+                lastRoom = line.substring(line.indexOf(">(")+2,line.indexOf(")",line.indexOf(">(")+2));
+            rooms.add(lastRoom);
         }
-        logOutput.append(dataRead+" records added.\n");
+        logOutput.append(data.size()+" records added.\n");
         inStream.close();
         logOutput.append("Last room added: "+lastRoom+"\n");
     }
@@ -188,11 +204,9 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder dataToSave = new StringBuilder();
         for (String s : data) {
             dataToSave.append(s);
-            //dataToSave.append("\n");
         }
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
         FileOutputStream outFile = new FileOutputStream(file);
-        //FileOutputStream outFile = openFileOutput(fileName, MODE_APPEND);
         outFile.write(dataToSave.toString().getBytes());
         outFile.close();
     }
