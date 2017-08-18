@@ -1,0 +1,13 @@
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+/app/src/androidTest
+/app/src/test
+/app/build
+/app/libs
+/build
+/gradle
+/app/build.gradle
+/app/proguard-rules.pro
+!/app/src/main/
