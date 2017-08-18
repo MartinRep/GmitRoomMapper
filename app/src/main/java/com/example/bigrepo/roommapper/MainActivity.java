@@ -2,7 +2,9 @@ package com.example.bigrepo.roommapper;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Environment;
 import android.support.annotation.IdRes;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.support.design.widget.Snackbar;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         logOutput.setBackgroundColor(Color.BLACK);
         logOutput.setTextColor(Color.GREEN);
+
+        //Checks for minimum display size
+        if (Configuration.SCREENLAYOUT_SIZE_MASK != Configuration.SCREENLAYOUT_SIZE_XLARGE) {
+            System.exit(10);
+        }
 
         //Checks for storage permissions and ask for then if needed
         if(!verifyStoragePermissions(MainActivity.this)){

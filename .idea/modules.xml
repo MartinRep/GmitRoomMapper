@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GmitRoomMapper.iml" filepath="$PROJECT_DIR$/GmitRoomMapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/RoomMapper.iml" filepath="$PROJECT_DIR$/RoomMapper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
